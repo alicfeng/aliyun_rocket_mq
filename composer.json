@@ -7,7 +7,7 @@
       "email": "a@samego.com"
     }
   ],
-  "description": "....",
+  "description": "基于阿里云官方SDK增强组件，更加优雅的应用姿势、更加灵活的动态配置，让应用层服务组件更加标准规范",
   "keywords": [
 
   ],
@@ -15,7 +15,7 @@
   "require": {
     "php": "^7.0|^8.0",
     "ext-json": "*",
-    "aliyunmq/mq-http-sdk": ">=1.0.3",
+    "aliyunmq/mq-http-sdk": "^1.0.3",
     "friendsofphp/php-cs-fixer": "^2.18"
   },
   "require-dev": {
