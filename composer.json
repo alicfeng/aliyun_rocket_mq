@@ -9,7 +9,6 @@
   ],
   "description": "基于阿里云官方SDK增强组件，更加优雅的应用姿势、更加灵活的动态配置，让应用层服务组件更加标准规范",
   "keywords": [
-
   ],
   "minimum-stability": "stable",
   "require": {
@@ -39,5 +38,8 @@
       "vendor/friendsofphp/php-cs-fixer/php-cs-fixer fix config",
       "vendor/friendsofphp/php-cs-fixer/php-cs-fixer fix tests"
     ]
-  }
+  },
+  "bin": [
+    "bin/fix_official_pkg.sh"
+  ]
 }

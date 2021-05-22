@@ -23,8 +23,8 @@ class CacheService
         if (false == (self::$_instance instanceof \Redis)) {
             self::$_instance = new \Redis();
             self::$_instance->pconnect($config['host'], $config['port']);
-            self::$_instance->auth($config['password']);
-            self::$_instance->select($config['database']);
+            self::$_instance->auth($config['password'] ?? null);
+            self::$_instance->select($config['database'] ?? 0);
         }
 
         return self::$_instance;

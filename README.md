@@ -9,9 +9,6 @@
     更加优雅的应用姿势、更加灵活的动态配置，让应用层服务组件更加标准规范
 </p>
 <p align="center">
-    <a href="https://travis-ci.com/github/alicfeng/aliyun_rocket_mq">
-        <img src="https://travis-ci.com/alicfeng/aliyun_rocket_mq.svg?branch=master" alt="Build Status">
-    </a>
     <a href="https://packagist.org/packages/alicfeng/aliyun_rocket_mq">
         <img src="https://poser.pugx.org/alicfeng/aliyun_rocket_mq/v/stable.svg" alt="Latest Stable Version">
     </a>
@@ -34,8 +31,11 @@
 
 ## 安装
 
-```
+```shell
 composer require alicfeng/aliyun_rocket_mq -vvv
+
+# 安装完毕必须执行如下脚本 解决官网代码缺陷
+vendor/alicfeng/aliyun_rocket_mq/bin/fix_official_pkg.sh
 ```
 
 
@@ -91,3 +91,27 @@ Producer::normal($config['client'])->publish('MQ_xxx', TopicEnum::DEMO_SERVICE, 
 Consumer::normal($config['client'], new MessageEvent($config['consumer'], $config['cache']))->subscribe();
 
 ```
+
+
+
+## 注意
+
+假设以镜像交付时，务必再安装依赖完毕时执行修复脚本，如下为示例
+
+```dockerfile
+# 安装完毕必须执行如下脚本 解决官网代码缺陷
+RUN vendor/alicfeng/aliyun_rocket_mq/bin/fix_official_pkg.sh
+```
+
+或者在持续集成中执行
+
+```yaml
+# 安装完毕必须执行如下脚本 解决官网代码缺陷
+- name: 安装依赖
+  image: registry-vpc.cn-shenzhen.aliyuncs.com/library/application:1.0.0
+  commands:
+  - composer config -g
+  - COMPOSER_MEMORY_LIMIT=-1 composer install --optimize-autoloader -vvv
+  - vendor/alicfeng/aliyun_rocket_mq/bin/fix_official_pkg.sh
+```
+
