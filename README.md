@@ -29,6 +29,7 @@
 3. 专注于配置化定义与注册，更加灵活简洁
 
 
+
 ## 安装
 
 ```shell
@@ -39,7 +40,9 @@ vendor/alicfeng/aliyun_rocket_mq/bin/fix_official_pkg.sh
 ```
 
 
+
 ## 配置
+
 ```php
 
 $config = [
@@ -69,7 +72,10 @@ $config = [
 ```
 
 
+
 ## 使用
+
+#### 简单使用
 
 ```php
 use MQ\Model\TopicMessage;
@@ -89,7 +95,47 @@ Producer::normal($config['client'])->publish('MQ_xxx', TopicEnum::DEMO_SERVICE, 
 
 // 普通消息订阅
 Consumer::normal($config['client'], new MessageEvent($config['consumer'], $config['cache']))->subscribe();
+```
 
+#### 模切约定
+
+1. 消费时、每一个服务订阅一个主题，即一个进程仅支持一个主题( `topic` )监听
+2. 消费时、每一个订阅进程支持多个消息标签( `MessageTag` )监听
+3. 消费时、每一个消息标签需要实现对于应的标签处理事件类，具体约定示例如下：
+
+```php
+// 消费配置
+'consumer' => [
+  // 定义承载消费处理基类命名空间
+  'handler_base_namespace' => 'App\\Queue\\Handler',
+  'topic'                  => env('MQ_ROCKET_CONSUMER_TOPIC'),
+  'message_tags'           => [
+    'Demo'
+  ],
+  'group_id'               => env('MQ_ROCKET_CONSUMER_GROUP_ID'),
+  'instance_id'            => env('MQ_ROCKET_CONSUMER_INSTANCE_ID'),
+];
+
+// 定义好了 consumer.handler_base_namespace 与 consumer.message_tags.* 则需要定义Demo消费处理类 DemoHandler
+// 同时此类需要继承 Samego\RocketMQ\Contract\QueueServiceHandlerInterface 接口
+
+namespace App\Queue\Handler;
+use MQ\Model\Message;
+use Samego\RocketMQ\Contract\QueueServiceHandlerInterface;
+use Samego\RocketMQ\Helper\StdLogHelper;
+
+class DemoHandler implements QueueServiceHandlerInterface
+{
+    public function handler(Message $message): bool
+    {
+        return true;
+    }
+
+    public function failure(Message $message): void
+    {
+      
+    }
+}
 ```
 
 
