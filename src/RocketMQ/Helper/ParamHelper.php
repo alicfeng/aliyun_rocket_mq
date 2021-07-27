@@ -63,4 +63,18 @@ class ParamHelper
             throw new ParamInvalidException($tag . ' handler class not exist', 400);
         }
     }
+
+    /**
+     * @function 驼峰命名转下划线命名
+     * @description 小写和大写紧挨一起的地方,加上分隔符,然后全部转小写
+     * @param $camelCaps
+     * @param string $separator
+     * @return string
+     * @author Fsliu
+     * @datetime 2021/7/27
+     */
+    public static function unCanalize($camelCaps, $separator = '_')
+    {
+        return strtolower(preg_replace('/([a-z])([A-Z])/', '$1' . $separator . '$2', $camelCaps));
+    }
 }

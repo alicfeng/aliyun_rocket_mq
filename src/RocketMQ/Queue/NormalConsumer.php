@@ -68,7 +68,7 @@ class NormalConsumer
                     $this->_event->instance_id,
                     $this->_event->topic,
                     $this->_event->group_id,
-                    $message_tag
+                    ParamHelper::unCanalize($message_tag)
                 );
 
                 try {
