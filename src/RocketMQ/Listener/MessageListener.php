@@ -7,6 +7,7 @@
 namespace Samego\RocketMQ\Listener;
 
 use MQ\Model\Message;
+use Samego\RocketMQ\Helper\ParamHelper;
 use Samego\RocketMQ\Service\RepeatMessageService;
 
 class MessageListener
@@ -30,7 +31,7 @@ class MessageListener
         }
 
         // 2.分发处理业务逻辑
-        $result = call_user_func_array([new ($this->handler_base_namespace . '\\' . ucfirst($message->getMessageTag()) . 'Handler'), 'handler'], [$message]);
+        $result = call_user_func_array([new ($this->handler_base_namespace . '\\' . ParamHelper::camelize($message->getMessageTag()) . 'Handler'), 'handler'], [$message]);
 
         // 3.如果执行失败 触发失败定义监听事件
         if (false === $result) {
@@ -43,6 +44,6 @@ class MessageListener
     public function failure(Message $message): void
     {
         // 1.分发业务失败逻辑
-        call_user_func_array([new ($this->handler_base_namespace . '\\' . ucfirst($message->getMessageTag()) . 'Handler'), 'failure'], [$message]);
+        call_user_func_array([new ($this->handler_base_namespace . '\\' . ParamHelper::camelize($message->getMessageTag()) . 'Handler'), 'failure'], [$message]);
     }
 }

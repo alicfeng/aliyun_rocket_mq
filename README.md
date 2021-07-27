@@ -85,7 +85,7 @@ use Samego\RocketMQ\Enum\TopicEnum;
 use Samego\RocketMQ\Event\MessageEvent;
 use Samego\RocketMQ\Producer;
 
-$message = new TopicMessage('hello world');
+$message = new TopicMessage(['name' => 'hello world']);
 $message->putProperty('timestamp', time());
 $message->setMessageTag(MessageTagEnum::TRAINING_SERVICE_TRAINING_CONTROLLER);
 $message->setMessageKey('uuid');

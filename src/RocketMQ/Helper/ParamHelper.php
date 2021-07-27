@@ -56,11 +56,27 @@ class ParamHelper
         }
 
         foreach ($message_tags as $tag) {
-            if (class_exists($config['handler_base_namespace'] . '\\' . ucfirst($tag) . 'Handler')) {
+            if (class_exists($config['handler_base_namespace'] . '\\' . self::camelize($tag) . 'Handler')) {
                 continue;
             }
 
             throw new ParamInvalidException($tag . ' handler class not exist', 400);
         }
+    }
+
+    /**
+     * @function    camelize
+     * @description 下划线转驼峰命名
+     * @param string $input     入参
+     * @param string $separator 分隔符
+     * @return string
+     * @author      Fsliu
+     * @datetime    2021/7/27
+     */
+    public static function camelize(string $input, string $separator = '_'): string
+    {
+        $words = $separator . str_replace($separator, ' ', strtolower($input));
+
+        return ltrim(str_replace(' ', '', ucwords($words)), $separator);
     }
 }
