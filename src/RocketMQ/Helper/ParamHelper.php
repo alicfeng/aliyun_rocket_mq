@@ -66,7 +66,7 @@ class ParamHelper
 
     /**
      * @function    camelize
-     * @description 下划线转驼峰命名
+     * @description 下划线转驼峰命名 且 首字母大写
      * @param string $input     入参
      * @param string $separator 分隔符
      * @return string
@@ -77,6 +77,6 @@ class ParamHelper
     {
         $words = $separator . str_replace($separator, ' ', strtolower($input));
 
-        return ltrim(str_replace(' ', '', ucwords($words)), $separator);
+        return ucfirst(ltrim(str_replace(' ', '', ucwords($words)), $separator));
     }
 }

@@ -11,6 +11,12 @@ use Samego\RocketMQ\Exception\ParamInvalidException;
 use Samego\RocketMQ\Helper\ParamHelper;
 use Samego\RocketMQ\Listener\MessageListener;
 
+/**
+ * Class MessageEvent
+ * 消息事件.
+ * @version 1.0.0
+ * @author  AlicFeng
+ */
 class MessageEvent
 {
     /**
